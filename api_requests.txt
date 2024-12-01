@@ -1,0 +1,11 @@
+
+# 1. Register a new user
+curl -X POST "http://localhost:3000/register" \
+  -H "Content-Type: application/json" \
+  -d '{"username": "newuser", "password": "securepassword"}'
+
+# 2. Login with the registered user credentials
+curl -X POST "$BASE_URL/login" \
+  -H "Content-Type: application/json" \
+  -d '{"username": "newuser", "password": "securepassword"}'
+

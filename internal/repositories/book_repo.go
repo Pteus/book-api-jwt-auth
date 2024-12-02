@@ -23,7 +23,7 @@ func NewBookRepository(db *sql.DB) BookRepository {
 }
 
 func (b *bookRepository) CreateBook(book *models.Book) error {
-	_, err := b.db.Exec("INSERT INTO books (title, author, genre, username) values (_,err,err,)", book.Title, book.Author, book.Genre, book.Username)
+	_, err := b.db.Exec("INSERT INTO books (title, author, genre, username) values ($1,$2,$3,$4)", book.Title, book.Author, book.Genre, book.Username)
 	if err != nil {
 		return err
 	}
@@ -32,7 +32,7 @@ func (b *bookRepository) CreateBook(book *models.Book) error {
 }
 
 func (b *bookRepository) GetAllByUsername(username string) ([]models.Book, error) {
-	rows, err := b.db.Query("SELECT id, title, author, genre WHERE username = $1", username)
+	rows, err := b.db.Query("SELECT id, title, author, genre, username FROM books WHERE username = $1", username)
 	if err != nil {
 		return nil, err
 	}
@@ -41,9 +41,10 @@ func (b *bookRepository) GetAllByUsername(username string) ([]models.Book, error
 	var books []models.Book
 	for rows.Next() {
 		var book models.Book
-		if err := rows.Scan(&book.ID, &book.Title, &book.Author, &book.Genre); err != nil {
+		if err := rows.Scan(&book.ID, &book.Title, &book.Author, &book.Genre, &book.Username); err != nil {
 			return nil, err
 		}
+
 		books = append(books, book)
 	}
 

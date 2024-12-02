@@ -22,6 +22,15 @@ func InitDatabase() *sql.DB {
 		id SERIAL PRIMARY KEY,
 		username VARCHAR(255) UNIQUE NOT NULL,
 		password VARCHAR(255) NOT NULL
+	);
+	
+	CREATE TABLE IF NOT EXISTS books(
+		id SERIAL PRIMARY KEY,
+		title VARCHAR(255) NOT NULL,
+		author VARCHAR(255) NOT NULL,
+		genre VARCHAR(255) NOT NULL,
+		username VARCHAR(255) NOT NULL REFERENCES users(username) ON DELETE CASCADE,
+		created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 	);`
 
 	_, err = db.Exec(statement)

@@ -9,3 +9,12 @@ curl -X POST "$BASE_URL/login" \
   -H "Content-Type: application/json" \
   -d '{"username": "newuser", "password": "securepassword"}'
 
+# 3. Create a book 
+curl -X POST http://localhost:3000/book \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzMyMzk0NTgsInVzZXJuYW1lIjoibmV3dXNlciJ9.UfTcc1ArV4xJiXocGurvxHpVdIR4ILIY3-1Y73UpQ5s" \
+-H "Content-Type: application/json" \
+-d '{
+  "title": "The Great Gatsby",
+  "author": "F. Scott Fitzgerald",
+  "genre": "Classic"
+}'
